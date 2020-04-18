@@ -1,0 +1,9 @@
+    {  
+        "liveServer.settings.https":   
+        {
+            "enable": false, //set it true to enable the feature.
+            "cert": "C:\\Users\\tsjpl\\Documents\\SSL\\server.crt", //full path
+            "key": "C:\\Users\\tsjpl\\Documents\\SSL\\server.key", //full path
+            "passphrase": "cake"
+        }  
+        }

@@ -1,0 +1,41 @@
+firebase database user tree is sorted by phone number
+then it has a name,
+then it has a status valuem,
+then a list of phone numbers.
+
+EXAMPLE
+database\users\
+20391830
+- name:"Lars Larsen"
+- status:0
+- contacts:
+--29838888,
+--39492830,
+--83920974
+
+STATUS VARIBLE
+0: No sympoms on COVID-19 [GREEN]
+1: Recovered from COVID-19 [BLUE]
+2: Tested Positive with COVID-19 [RED]
+3: Has symptoms on COVID-19 [YELLOW]
+
+When a user registers it should automaticly create a new user in the database
+The user register simply with their phone number and a password for security,
+you might argue that a password security is not needed, but considering the fact that
+the users contact list is stored in the database, it would be a good idea. (i might be 
+wrong though)
+
+The way that the app checks for statuses in the users social network is by using a list
+of phone numbers that the user have created, the app will then check in the global 
+users list to check if a user matches the phone number currently searched for by the 
+users contact list, if not found in the database, it will go to the next number in
+the list of phone numbers. if however a phone number has been found, it will get the 
+user data (Name and status value) and the app will use the informaton to display it in 
+someway to the current user.
+
+The downside of this is that the check might take a long time to load depending on the
+ammount of users in the database, but considering that this is the only working way i 
+could think of, theres not much to do.
+
+Maybe there would be a way for users on mobile browsers to check for users on their 
+phones contact list.
