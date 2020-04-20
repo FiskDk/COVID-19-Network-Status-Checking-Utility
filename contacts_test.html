@@ -1,32 +1,35 @@
-
+<!DOCTYPE html>
 <html>
-    <head>
-      <script src="https://apis.google.com/js/client.js"></script>
-      <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
-      <script>
-        function auth() {
-          var config = {
-            'client_id': 'OAUTH_CLIENT_ID',
-            'scope': 'https://www.google.com/m8/feeds'
-          };
-          gapi.auth.authorize(config, function() {
-            fetch(gapi.auth.getToken());
+  <head>
+    <meta charset='utf-8' />
+    <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+  </head>
+  <body>
+    <script type="text/javascript">
+          var clientId = '972494699942-npmnoua8quvspai89gu773348ql5mtg7.apps.googleusercontent.com';
+          var apiKey = 'AIzaSyDYB84ZI30wx3DwBv0gdrH_8fauqX60qeg';
+          var scopes = 'https://www.googleapis.com/auth/contacts.readonly';
+
+          $(document).on("click",".googleContactsButton", function(){
+            gapi.client.setApiKey(apiKey);
+            window.setTimeout(authorize);
           });
-        }
-  
-        function fetch(token) {
-          $.ajax({
-            url: 'https://www.google.com/m8/feeds/contacts/default/full?alt=json',
-            dataType: 'jsonp',
-            data: token
-          }).done(function(data) {
-              console.log(JSON.stringify(data));
-            });
-        }
-      </script>
-    </head>
-  
-    <body>
-      <button onclick="auth();">GET CONTACTS FEED</button>
-    </body>
-  </html>
+
+          function authorize() {
+            gapi.auth.authorize({client_id: clientId, scope: scopes, immediate: false}, handleAuthorization);
+          }
+
+          function handleAuthorization(authorizationResult) {
+            if (authorizationResult && !authorizationResult.error) {
+              $.get("https://www.google.com/m8/feeds/contacts/default/thin?alt=json&access_token=" + authorizationResult.access_token + "&max-results=500&v=3.0",
+                function(response){
+                  //process the response here
+                  console.log(response);
+                });
+            }
+          }
+        </script>
+        <script src="https://apis.google.com/js/client.js"></script>
+        <button class="googleContactsButton">Get my contacts</button>
+  </body>
+</html>
