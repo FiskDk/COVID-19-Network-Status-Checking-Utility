@@ -3,6 +3,99 @@
 
     </head>
     <body>
-     
+<script>
+    //Load template data
+    var contactlist=[
+        {name:"Lars Larsen",phone:"29837777",status:"0"},
+        {name:"Niels Larsen",phone:"29837377",status:"1"},
+        {name:"Niels Larsen",phone:"29437377",status:"2"},
+        {name:"Mette Larsen",phone:"29837747",status:"3"}
+        //The template above is repeated with all the users contacts.
+        //The name, phone, and status var will be pulled from a 
+        //loop that gets data from all the users contacts and converst them into this array.
+    ]
+    document.addEventListener("DOMContentLoaded", mainAppLoad);
+    console.log(contactlist)
+
+    //Simple function to check the status of a specific 
+    // person (by array number)
+    function getStatusByArrayNumber(number){
+        console.log("The user : " + contactlist[number].name + " has the status code of :" + contactlist[number].status)
+    }
+    function mainAppLoad(){
+    //Alert Checker
+    console.log("Loading contactlist....")
+    console.log(contactlist)
+    console.log("Starting load of individual contact and their data...")
+    contactlist.forEach(element =>
+     doStatusCheck(element)
+)
+function doStatusCheck(element){
+    console.log(element.name)
+        if (element.status=="0") {
+        console.log(element.name + " Dosent have any symptons of COVID-19, and havnt had COVID-19 before."); 
+        var statusText=" Dosent have any symptons of COVID-19, and havnt had COVID-19 before."
+        };
+        if (element.status=="1") {
+        console.log(element.name + " Has recovered from COVID-19");  
+        var statusText=" Has recovered from COVID-19"
+        };
+        if (element.status=="2") {
+        console.log(element.name + " Tested positive for COVID-19");  
+        var statusText=" Tested positive for COVID-19"
+        };
+        if (element.status=="3") {
+        console.log(element.name + " Has symptons of COVID-19");  
+        var statusText=" Has symptons of COVID-19"
+        };
+        createContactView(element, statusText)
+}
+function createContactView(element, statusText){
+var newc = document.createElement("div")
+var newct = document.createElement("p")
+var newcp = document.createElement("p")
+var newcs = document.createElement("p")
+newct.innerHTML=element.name
+newcp.innerHTML=element.phone
+newcs.innerHTML=element.status + " statusText: " + statusText
+newc.appendChild(newct)
+newc.appendChild(newcp)
+newc.appendChild(newcs)
+document.getElementById("Contacts").appendChild(newc)
+}
+    }
+
+</script>     
+<div id="Contacts">
+
+</div>
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-database.js"></script>
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-analytics.js"></script>
+
+<script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyDYB84ZI30wx3DwBv0gdrH_8fauqX60qeg",
+    authDomain: "covid-19-nscu.firebaseapp.com",
+    databaseURL: "https://covid-19-nscu.firebaseio.com",
+    projectId: "covid-19-nscu",
+    storageBucket: "covid-19-nscu.appspot.com",
+    messagingSenderId: "972494699942",
+    appId: "1:972494699942:web:9a90675bb78ed3f5b0e367",
+    measurementId: "G-BHY41ERJ11"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
+    // Set the configuration for your app
+  // TODO: Replace with your project's config object
+
+  // Get a reference to the database service
+  var database = firebase.database();
+</script>
 </body>
     </html>
