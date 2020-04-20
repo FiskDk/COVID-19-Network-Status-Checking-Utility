@@ -4,18 +4,20 @@
     </head>
     <body>
 <script>
+      var contactlist=[]
+      var newcontact=[]
     //Load template data
-    var contactlist=[
-        {name:"Lars Larsen",phone:"29837777",status:"0"},
-        {name:"Niels Larsen",phone:"29837377",status:"1"},
-        {name:"Niels Larsen",phone:"29437377",status:"2"},
-        {name:"Mette Larsen",phone:"29837747",status:"3"}
+   // var contactlist=[
+    //    {name:"Lars Larsen",phone:"29837777",status:"0"},
+      //  {name:"Niels Larsen",phone:"29837377",status:"1"},
+        //{name:"Niels Larsen",phone:"29437377",status:"2"},
+        //{name:"Mette Larsen",phone:"29837747",status:"3"}
         //The template above is repeated with all the users contacts.
         //The name, phone, and status var will be pulled from a 
         //loop that gets data from all the users contacts and converst them into this array.
-    ]
+    //]
     document.addEventListener("DOMContentLoaded", mainAppLoad);
-    console.log(contactlist)
+  //  console.log(contactlist)
 
     //Simple function to check the status of a specific 
     // person (by array number)
@@ -25,11 +27,141 @@
     function mainAppLoad(){
     //Alert Checker
     console.log("Loading contactlist....")
+    //Google Contacts Stuff Start
+    var contactsraw=""
+  
+          var clientId = '972494699942-g7mkc525c24qiot19qkkruaasio3200p.apps.googleusercontent.com';
+          var apiKey = 'AIzaSyDYB84ZI30wx3DwBv0gdrH_8fauqX60qeg';
+          var scopes = 'https://www.googleapis.com/auth/contacts.readonly';
+
+          $(document).on("click",".googleContactsButton", function(){
+            gapi.client.setApiKey(apiKey);
+            window.setTimeout(authorize);
+          });
+    
+          function authorize() {
+            gapi.auth.authorize({client_id: clientId, scope: scopes, immediate: false}, handleAuthorization);
+          }
+
+          function handleAuthorization(authorizationResult) {
+              console.log("test")
+            if (authorizationResult && !authorizationResult.error) {
+                console.log("test2")
+
+              $.get("https://www.google.com/m8/feeds/contacts/default/thin?alt=json&access_token=" + authorizationResult.access_token + "&max-results=500&v=3.0",
+                function(response){
+                  //process the response here
+                  console.log(response);
+                  contactsraw=response;
+                  response.feed.entry.forEach(element =>
+                check(element)
+                  )
+                  //After loading all the contacts, render them to the screen.
+                  renderContacts();
+               //   createCustomContact(response)
+                });
+            }
+            console.log(authorizationResult)
+          }
+          var addedContacts=[]
+function check(element){
+    if(element.hasOwnProperty("gd$phoneNumber")){
+                  console.log(element)
+                  try{
+                    if(addedContacts.includes(element.gd$phoneNumber[0].$t.replace("+45","").replace(/\s/g,''))){
+                      console.log("Contact allready added!")
+                  }else{
+                  createCustomContact(element)
+                  }
+                  }
+                  catch(err)
+                  {
+console.log(err)
+                  }
+                
+                  }
+}
+          function createCustomContact(element){
+           
+              //Get Contact Full name
+              try{
+                  if(element.hasOwnProperty("gd$name")){
+                      console.log("gd$name key found")
+                      if(element.gd$name.hasOwnProperty("gd$fullName")){
+                          console.log("gd$fullName found!")
+                          console.log(element.gd$name.gd$fullName.$t)
+                          var cName=element.gd$name.gd$fullName.$t
+                      }else{
+                          console.log("Full Name not found")
+                      }
+                  }else{
+                      console.log("gd$name not found!")
+                  }
+
+              }
+              catch(err)
+              {
+                  console.log("Error in : ")
+                  console.log(element)
+                  console.log("The error is : ")
+                  console.log(err)
+              }
+      
+        // Get Contact Phone Number
+        if(element.hasOwnProperty("gd$phoneNumber")){
+            var cPhone=element.gd$phoneNumber[0].$t.replace("+45","").replace(/\s/g,'')      
+
+        }else{
+            console.log("No Phone number found!")
+        }
+             
+        //Get Status from Database
+        var cStatus=""
+return firebase.database().ref('/users/' + cPhone).once('value').then(function(snapshot) {
+    if (typeof snapshot.val() === 'undefined' || snapshot.val() === null) {
+    // variable is undefined or null
+    console.log("Not found.")
+    var cStatus="-1"
+}else{
+    console.log("Found")
+    console.log(snapshot.val())
+    var cStatus=snapshot.val().status
+}
+console.log("Creating new contact with the values")
+console.log("Name : " + cName)
+console.log("Phone : " + cPhone)
+console.log("Status : " + cStatus)      
+var newcontact=({name:cName,phone:cPhone,status:cStatus})
+ 
+contactlist.push(newcontact)
+console.log(newcontact)
+console.log(contactlist)
+console.log(addedContacts)
+addedContacts.push(cPhone)
+});
+
+        }
+    //Google Contacts Stuff End
+
+   
+    }
+    function renderContacts(){
     console.log(contactlist)
     console.log("Starting load of individual contact and their data...")
+    var addedNames=[] //Create a array to store added names,
+    //used to stop duplications.
     contactlist.forEach(element =>
-     doStatusCheck(element)
+     nameCheck(element)
 )
+function nameCheck(element){
+    if(addedNames.includes(element.name)){
+        console.log("Duplicate contact detected : "+element.name);
+    }else{
+        addedNames.push(element.name);
+        doStatusCheck(element);
+    }
+  
+}
 function doStatusCheck(element){
     console.log(element.name)
         if (element.status=="0") {
@@ -48,6 +180,10 @@ function doStatusCheck(element){
         console.log(element.name + " Has symptons of COVID-19");  
         var statusText=" Has symptons of COVID-19"
         };
+        if (element.status=="-3") {
+        console.log(element.name + " Invalid, or not registered");  
+        var statusText=" Invite them to COVID-19 NSCU"
+        };
         createContactView(element, statusText)
 }
 function createContactView(element, statusText){
@@ -63,18 +199,25 @@ newc.appendChild(newcp)
 newc.appendChild(newcs)
 document.getElementById("Contacts").appendChild(newc)
 }
-    }
-
+}
 </script>     
 <div id="Contacts">
 
 </div>
 <!-- The core Firebase JS SDK is always required and must be listed first -->
 <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-auth.js"></script>
 <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-database.js"></script>
 <!-- TODO: Add SDKs for Firebase products that you want to use
      https://firebase.google.com/docs/web/setup#available-libraries -->
 <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-analytics.js"></script>
+<div id="signup">
+    <input type="text" id="nameIn" placeholder="Name">
+<input type="tel" id="phoneNumberIn"placeholder="Only supports danish phone numbers.">
+<input type="text" id="emailIn" placeholder="Email">
+<input type="password" id="passIn" placeholder="password">
+<input type="button" id="startSignUp" value="Verify Phone">
+</div>
 
 <script>
   // Your web app's Firebase configuration
@@ -96,13 +239,40 @@ document.getElementById("Contacts").appendChild(newc)
 
   // Get a reference to the database service
   var database = firebase.database();
-
-  function testContacts(){
-      const url = "https://www.google.com/m8/feeds/contacts/default/full"
-      $.getJSON(url, function(result){
-          console.log(result)
-      });
+tempuserphone=""
+document.getElementById("startSignUp").addEventListener("click", function(){
+   
+        tempuserphone=document.getElementById("phoneNumberIn").value
+     //Create real account
+  var email =document.getElementById("emailIn").value
+  var password=document.getElementById("passIn").value
+  firebase.auth().createUserWithEmailAndPassword(email, password)
+.then(function(result) {
+  return result.user.updateProfile({
+    displayName: document.getElementById("nameIn").value
+  });
+}).catch(function(error) {
+  console.log(error);
+});
+  // ...
+  try{
+    console.log("Creating database object...")
+  firebase.database().ref('users/' + tempuserphone.replace("+45","").replace(/\s/g,'')).set({
+    status: "0",
+  });
+  console.log("Should be set successfully.")
+  }catch(err){
+      console.log(err)
   }
+
+})
+
+  //Sign in
+  function signIn(email, password){
+        firebase.auth().signInWithEmailAndPassword(email, password);
+  }  
 </script>
+<script src="https://apis.google.com/js/client.js"></script>
+<button class="googleContactsButton">Get my contacts</button>
 </body>
     </html>

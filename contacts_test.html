@@ -6,7 +6,9 @@
   </head>
   <body>
     <script type="text/javascript">
-          var clientId = '972494699942-npmnoua8quvspai89gu773348ql5mtg7.apps.googleusercontent.com';
+    var contactsraw=""
+    var contactlist=[]
+          var clientId = '972494699942-g7mkc525c24qiot19qkkruaasio3200p.apps.googleusercontent.com';
           var apiKey = 'AIzaSyDYB84ZI30wx3DwBv0gdrH_8fauqX60qeg';
           var scopes = 'https://www.googleapis.com/auth/contacts.readonly';
 
@@ -20,14 +22,78 @@
           }
 
           function handleAuthorization(authorizationResult) {
+              console.log("test")
             if (authorizationResult && !authorizationResult.error) {
+                console.log("test2")
+
               $.get("https://www.google.com/m8/feeds/contacts/default/thin?alt=json&access_token=" + authorizationResult.access_token + "&max-results=500&v=3.0",
                 function(response){
                   //process the response here
                   console.log(response);
+                  contactsraw=response;
+                  response.feed.entry.forEach(element =>
+                check(element)
+                  )
+                  createCustomContact(response)
                 });
             }
+            console.log(authorizationResult)
           }
+          var addedContacts=[]
+function check(element){
+    if(element.hasOwnProperty("gd$phoneNumber")){
+                  console.log(element)
+                  try{
+                    if(addedContacts.includes(element.gd$phoneNumber[0].$t.replace("+45","").replace(/\s/g,''))){
+                      console.log("Contact allready added!")
+                  }else{
+                  createCustomContact(element)
+                  }
+                  }
+                  catch(err)
+                  {
+console.log(err)
+                  }
+                
+                  }
+}
+          function createCustomContact(element){
+              //Get Contact Full name
+              try{
+                  if(element.hasOwnProperty("gd$name")){
+                      console.log("gd$name key found")
+                      if(element.gd$name.hasOwnProperty("gd$fullName")){
+                          console.log("gd$fullName found!")
+                          var cName=element.gd$name.gd$fullName.$t
+                      }else{
+                          console.log("Full Name not found")
+                      }
+                  }else{
+                      console.log("gd$name not found!")
+                  }
+
+              }
+              catch(err)
+              {
+                  console.log("Error in : ")
+                  console.log(element)
+                  console.log("The error is : ")
+                  console.log(err)
+              }
+      
+        // Get Contact Phone Number
+        if(element.hasOwnProperty("gd$phoneNumber")){
+            var cPhone=element.gd$phoneNumber[0].$t.replace("+45","").replace(/\s/g,'')      
+
+        }else{
+            console.log("No Phone number found!")
+        }
+                  //Get Status from Database
+     
+         var newcontact=({name:cName,phone:cPhone,status:"0"})
+contactlist.push(newcontact)
+addedContacts.push(cPhone)
+        }
         </script>
         <script src="https://apis.google.com/js/client.js"></script>
         <button class="googleContactsButton">Get my contacts</button>
