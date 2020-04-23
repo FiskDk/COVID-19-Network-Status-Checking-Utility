@@ -249,7 +249,8 @@ document.getElementById("startSignUp").addEventListener("click", function(){
   firebase.auth().createUserWithEmailAndPassword(email, password)
 .then(function(result) {
   return result.user.updateProfile({
-    displayName: document.getElementById("nameIn").value
+    displayName: document.getElementById("nameIn").value,
+    photoURL: tempuserphone.replace("+45","")
   });
 }).catch(function(error) {
   console.log(error);

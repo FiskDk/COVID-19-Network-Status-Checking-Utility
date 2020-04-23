@@ -14,8 +14,9 @@ database\users\
 --83920974
 
 STATUS VARIBLE
+-1: Not using COVID-19 NSCU [BLUE]
 0: No sympoms on COVID-19 [GREEN]
-1: Recovered from COVID-19 [BLUE]
+1: Recovered from COVID-19 [PINK]
 2: Tested Positive with COVID-19 [RED]
 3: Has symptoms on COVID-19 [YELLOW]
 
