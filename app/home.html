@@ -137,8 +137,8 @@ document.getElementById("currentStatusText").setAttribute("class","text-center i
         
 }
     function updateStatus(newStatus){
-     firebase.database().ref('/users/' + "29837779" + "/status").remove()
-  firebase.database().ref('users/29837779').set({
+     firebase.database().ref('/users/' + user.photoURL + "/status").remove()
+  firebase.database().ref('users/'+user.photoURL).set({
     status: newStatus,
   });
 location.reload()
