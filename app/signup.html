@@ -51,7 +51,12 @@
       var database = firebase.database();
      firebase.auth().onAuthStateChanged(function(user) {
   if (user) {
-      location.href="./home.html"
+            setTimeout(function () {
+        
+              location.href="./home.html"
+        
+    }, 5000);
+   
   }else{
       console.log("Not logged in, or the authentacation failed.")
   }
@@ -67,16 +72,12 @@ console.log("Creating account for : " + tempuserphone)
   var password=document.getElementById("passIn").value
   firebase.auth().createUserWithEmailAndPassword(email, password)
 .then(function(result) {
-       setTimeout(function () {
-        if (newState == -1) {
-          return result.user.updateProfile({
+ 
+  return result.user.updateProfile({
     displayName: document.getElementById("nameIn").value,
     photoURL: tempuserphone
 //console.log("user created.")
   });
-        }
-    }, 5000);
-  
 }).catch(function(error) {
   console.log(error);
 });
