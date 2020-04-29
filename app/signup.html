@@ -80,6 +80,7 @@ console.log("Creating account for : " + tempuserphone)
   //  console.log("Creating database object...")
   firebase.database().ref('users/' + tempuserphone).set({
     status: "0",
+      })
   firebase.currentUser.updateProfile({
     displayName: document.getElementById("nameIn").value,
     photoURL: tempuserphone
@@ -98,7 +99,7 @@ console.log("Creating account for : " + tempuserphone)
   //console.log("Should be set successfully.")
 
 
-})
+
  })
 };
 
