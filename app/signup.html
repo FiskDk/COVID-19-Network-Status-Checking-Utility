@@ -81,23 +81,49 @@ console.log("Creating account for : " + tempuserphone)
   firebase.database().ref('users/' + tempuserphone).set({
     status: "0",
       })
-  firebase.currentUser.updateProfile({
-    displayName: document.getElementById("nameIn").value,
-    photoURL: tempuserphone
-//console.log("user created.")
-  });
-      firebase.currentUser.updateProfile({
-    displayName: document.getElementById("nameIn").value,
-    photoURL: tempuserphone
-//console.log("user created.")
-  });
-      firebase.currentUser.updateProfile({
-    displayName: document.getElementById("nameIn").value,
-    photoURL: tempuserphone
-//console.log("user created.")
-  });
-  //console.log("Should be set successfully.")
 
+var user = firebase.auth().currentUser;
+
+user.updateProfile({
+    displayName: document.getElementById("nameIn").value,
+    photoURL: tempuserphone
+}).then(function() {
+  // Update successful.
+}).catch(function(error) {
+  // An error happened.
+});
+     user.updateProfile({
+    displayName: document.getElementById("nameIn").value,
+    photoURL: tempuserphone
+}).then(function() {
+  // Update successful.
+}).catch(function(error) {
+  // An error happened.
+});
+     user.updateProfile({
+    displayName: document.getElementById("nameIn").value,
+    photoURL: tempuserphone
+}).then(function() {
+  // Update successful.
+}).catch(function(error) {
+  // An error happened.
+});
+     user.updateProfile({
+    displayName: document.getElementById("nameIn").value,
+    photoURL: tempuserphone
+}).then(function() {
+  // Update successful.
+}).catch(function(error) {
+  // An error happened.
+});
+     user.updateProfile({
+    displayName: document.getElementById("nameIn").value,
+    photoURL: tempuserphone
+}).then(function() {
+  // Update successful.
+}).catch(function(error) {
+  // An error happened.
+});
 
 
  })
