@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html style="height: 772px;">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>COVID-19 NSCU</title>
+    <meta name="theme-color" content="#1e2833">
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/fonts/ionicons.min.css">
+    <link rel="stylesheet" href="assets/css/Login-Form-Dark.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+
+<body style="height: 835px;">
+    <!--When the user logs in, it should ask for google contacts access too, then
+use localStorage to store the contact list.-->
+    <h1>Heading</h1>
+    <div class="login-dark" style="margin-top: -278px;background-image: url(&quot;assets/img/orlova-maria-bU8TeXhsPcY-unsplash.jpg&quot;);">
+        <form method="post" style="margin-top: 35px;height: 548px;">
+            <h2 class="sr-only">Login Form</h2>
+            <h1 style="font-size: 32px;">COVID-19 NSCU</h1>
+            <p class="text-center" style="font-size: 12px;">COVID-19 Network Status Checking Utility</p>
+            <div class="illustration"><i class="icon ion-ios-locked-outline"></i></div>
+            <div class="form-group"><input class="form-control" type="email" name="email" placeholder="Email" id="emailIn"></div>
+            <div class="form-group"><input class="form-control" type="password" name="password" placeholder="Password" id="passIn"></div>
+            <div class="form-group"><button class="btn btn-primary btn-block" type="button" id="loginButton">Log In</button></div><a href="signup.html" class="forgot">Har du ikke en bruger?</a></form>
+    </div><script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-database.js"></script>
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-analytics.js"></script>
+
+<script>
+     var firebaseConfig = {
+    apiKey: "AIzaSyDYB84ZI30wx3DwBv0gdrH_8fauqX60qeg",
+    authDomain: "covid-19-nscu.firebaseapp.com",
+    databaseURL: "https://covid-19-nscu.firebaseio.com",
+    projectId: "covid-19-nscu",
+    storageBucket: "covid-19-nscu.appspot.com",
+    messagingSenderId: "972494699942",
+    appId: "1:972494699942:web:9a90675bb78ed3f5b0e367",
+    measurementId: "G-BHY41ERJ11"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
+    
+      var database = firebase.database();
+     function signIn(email, password){
+        firebase.auth().signInWithEmailAndPassword(email, password);
+  }  
+     firebase.auth().onAuthStateChanged(function(user) {
+  if (user) {
+      location.href="./home.html"
+  }else{
+      console.log("Not logged in, or the authentacation failed.")
+  }
+     })
+ window.addEventListener("load",function(){
+         document.getElementById("loginButton").addEventListener("click", function(){
+             console.log("Trying to sign in")
+            signIn(document.getElementById("emailIn").value,document.getElementById("passIn").value)
+         })
+     //Trigger button press when the enter key is clicked
+     // Get the input field
+var input = document.getElementById("passIn");
+
+// Execute a function when the user releases a key on the keyboard
+input.addEventListener("keyup", function(event) {
+  // Number 13 is the "Enter" key on the keyboard
+  if (event.keyCode === 13) {
+    // Cancel the default action, if needed
+    event.preventDefault();
+    // Trigger the button element with a click
+    document.getElementById("loginButton").click();
+  }
+});
+     })
+</script>
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+</body>
+
+</html>

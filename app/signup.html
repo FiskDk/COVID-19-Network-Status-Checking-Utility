@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>COVID-19 NSCU</title>
+    <meta name="theme-color" content="#1e2833">
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/fonts/ionicons.min.css">
+    <link rel="stylesheet" href="assets/css/Login-Form-Dark.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+
+<body>
+    <h1>Heading</h1>
+    <div class="login-dark" style="margin-top: -278px;background-image: url(&quot;assets/img/orlova-maria-bU8TeXhsPcY-unsplash.jpg&quot;);">
+        <form method="post" id="phoneNumberIn" style="margin-top: 85px;">
+            <h2 class="sr-only">Login Form</h2>
+            <h1 style="font-size: 32px;">COVID-19 NSCU</h1>
+            <p class="text-center" style="font-size: 12px;">COVID-19 Network Status Checking Utility</p>
+            <div class="illustration"><i class="icon ion-ios-locked-outline"></i></div>
+            <div class="form-group"><input class="form-control" type="text" name="register_nameIn" required="" placeholder="Navn" autocomplete="on" id="nameIn"></div>
+            <div class="form-group"><input class="form-control" type="tel" placeholder="Telefon" id="phoneNumberInput"></div>
+            <div class="form-group"><input class="form-control" type="email" name="register_emailIn" required="" placeholder="Email" autocomplete="on" inputmode="email" id="emailIn"></div>
+            <div class="form-group"><input class="form-control" type="password" name="register_passwordIn" required="" placeholder="Adgangskode" id="passIn"></div>
+            <div class="form-group"><button class="btn btn-primary btn-block" type="button" id="startSignUp">Opret Bruger</button></div><a href="login.html" class="forgot">Har du allerede en bruger?</a></form>
+    </div><script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-database.js"></script>
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-analytics.js"></script>
+
+<script>
+     var firebaseConfig = {
+    apiKey: "AIzaSyDYB84ZI30wx3DwBv0gdrH_8fauqX60qeg",
+    authDomain: "covid-19-nscu.firebaseapp.com",
+    databaseURL: "https://covid-19-nscu.firebaseio.com",
+    projectId: "covid-19-nscu",
+    storageBucket: "covid-19-nscu.appspot.com",
+    messagingSenderId: "972494699942",
+    appId: "1:972494699942:web:9a90675bb78ed3f5b0e367",
+    measurementId: "G-BHY41ERJ11"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
+      var database = firebase.database();
+     firebase.auth().onAuthStateChanged(function(user) {
+  if (user) {
+      location.href="./home.html"
+  }else{
+      console.log("Not logged in, or the authentacation failed.")
+  }
+     })
+window.onload = function(){
+ console.log("loaded")
+ document.getElementById("startSignUp").addEventListener("click", function(){
+   console.log("Clicked")
+  var tempuserphone=document.getElementById("phoneNumberInput).value.replace(/\s/g,'').replace("+45","")
+console.log("Creating account for : " + tempuserphone)
+     //Create real account
+  var email =document.getElementById("emailIn").value
+  var password=document.getElementById("passIn").value
+  firebase.auth().createUserWithEmailAndPassword(email, password)
+.then(function(result) {
+  return result.user.updateProfile({
+    displayName: document.getElementById("nameIn").value,
+    photoURL: tempuserphone
+//console.log("user created.")
+  });
+}).catch(function(error) {
+  console.log(error);
+});
+  // ...
+
+  //  console.log("Creating database object...")
+  firebase.database().ref('users/' + tempuserphone).set({
+    status: "0",
+  
+  //console.log("Should be set successfully.")
+
+
+})
+ })
+};
+
+</script>
+
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+</body>
+
+</html>

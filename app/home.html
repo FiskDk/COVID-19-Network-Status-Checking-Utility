@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>COVID-19 NSCU</title>
+    <meta name="theme-color" content="#1e2833">
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/fonts/ionicons.min.css">
+    <link rel="stylesheet" href="assets/css/Login-Form-Dark.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+
+<body style="background-color: #1e2833;">
+    <h1 class="text-center" style="color: #ffffff;">COVID-19 NSCU</h1>
+    <div class="align-self-center m-auto divSegment" style="background-color: #ffffff;width: 330px;">
+        <h1 class="text-center" style="color: #000000;font-size: 32px;height: 23px;margin-right: 10px;margin-left: 10px;">Velkommen tilbage</h1>
+        <p class="text-center" id="WelcomeUsername" style="color: #000000;padding-right: 10px;padding-left: 10px;font-size: 18px;padding-top: 8px;">Indlæser...<br></p>
+        <p class="text-center"><strong>Din nuværende status</strong></p><i class="fa fa-cloud-download d-flex justify-content-center align-self-center mx-auto icon_allGood" id="currentStatusIcon" style="font-size: 32px;"></i>
+        <p class="text-center icon_allGood" id="currentStatusText"
+            style="padding-left: 10px;padding-right: 10px;padding-bottom: 12px;"><strong>Indlæser...</strong><br></p>
+    </div>
+    <div class="align-self-center mx-auto divSegment" style="background-color: #ffffff;width: 330px;height: 342px;padding-bottom: 115px;margin-bottom: 18px;">
+        <p class="text-center" style="color: #000000;padding-top: 12px;"><strong>Her kan du ændre din status</strong></p>
+        <div class="table-responsive whiteBorder" style="border-top-color: white!important;">
+            <table class="table">
+                <thead style="border-top-color: white!important;">
+                    <tr>
+                        <th class="whiteBorder" style="border-top: 1px solid #ffffff;"><i class="fa fa-check icon_allGood" id="setStatusAllGood" style="font-size: 32px;"></i></th>
+                        <th style="border-top: 1px solid #ffffff;"><i class="fa fa-heart icon_recovered" id="setStatusRecovered" style="font-size: 32px;"></i></th>
+                        <th style="border-top: 1px solid #ffffff;"><i class="fa fa-warning icon_warning" id="setStatusWarning" style="font-size: 32px;"></i></th>
+                        <th class="whiteBorder" style="border-top: 1px solid #ffffff;"><i class="fa fa-window-close icon_infected" id="setStatusInfected" style="font-size: 32px;"></i></th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+        <div class="align-self-center m-auto">
+            <p style="color: #000000;padding-left: 7px;padding-right: 7px;margin-bottom: 15px;"><i class="fa fa-check icon_allGood"></i>&nbsp;Betyder at du ikke har symptomer på COVID-19, og at du ikke tidligere har haf COVID-19<br><i class="fa fa-heart icon_recovered"></i>&nbsp;Betyder at du er kommet dig efter COVID-19<br><i class="fa fa-warning icon_warning"></i>&nbsp;Betyder
+                at du har symptomer på COVID-19<br><i class="fa fa-window-close icon_infected"></i>&nbsp;Betyder at du er testet positiv med COVID-19<br></p>
+        </div>
+    </div>
+    <div class="align-self-center m-auto divSegment" style="background-color: #ffffff;width: 330px;height: 332px;overflow-y: scroll;">
+        <h1 class="text-center">Advarsler<br></h1>
+        <p style="padding-left: 7px;padding-right: 7px;">This is hardcoded, these elements will be dynamicly created when the support for it has been added.<br><br>4 af dine kontaktpersoner har fået symptomer på COVID-19.</p>
+        <ul>
+            <li>Tonni Svendsen</li>
+            <li>Kasper Petersen</li>
+            <li>Sofie Nielsen</li>
+            <li>Micheal Fisker</li>
+        </ul>
+        <p style="padding-left: 7px;padding-right: 7px;">2 af dine kontakter er kommet sig efter COVID-19!</p>
+        <ul>
+            <li>Birte Hansen</li>
+            <li>Sven-Erik Poulsen</li>
+        </ul>
+    </div><- Gets Firebase access->
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-database.js"></script>
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-analytics.js"></script>
+    
+<script>
+    var userStatus=""
+     // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyDYB84ZI30wx3DwBv0gdrH_8fauqX60qeg",
+    authDomain: "covid-19-nscu.firebaseapp.com",
+    databaseURL: "https://covid-19-nscu.firebaseio.com",
+    projectId: "covid-19-nscu",
+    storageBucket: "covid-19-nscu.appspot.com",
+    messagingSenderId: "972494699942",
+    appId: "1:972494699942:web:9a90675bb78ed3f5b0e367",
+    measurementId: "G-BHY41ERJ11"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
+    //End of firebase loading code
+      function doStatusCheck(userStatus){
+         console.log("Checking status : " + userStatus)
+        if (userStatus=="0") {
+      
+        var statusText=" Dosent have any symptons of COVID-19, and havnt had COVID-19 before."
+//Set user status to allGood
+        //Set user status icon to allGood
+document.getElementById("currentStatusIcon").setAttribute("class","fa fa-check d-flex justify-content-center align-self-center mx-auto icon_allGood")
+//Set user current status text to all good
+document.getElementById("currentStatusText").children[0].innerText="Har ingen symptomer på COVID-19"
+//Set user current status text color to allGood
+document.getElementById("currentStatusText").setAttribute("class","text-center icon_allGood")
+
+        };
+        if (userStatus=="1") {
+    
+        var statusText=" Has recovered from COVID-19"
+//Set user status to recovered
+        //Set user status icon to recovered
+document.getElementById("currentStatusIcon").setAttribute("class","fa fa-heart d-flex justify-content-center align-self-center mx-auto icon_recovered")
+//Set user current status text to recovered
+document.getElementById("currentStatusText").children[0].innerText="Er kommet sig efter COVID-19"
+//Set user current status text color to recovered
+document.getElementById("currentStatusText").setAttribute("class","text-center icon_recovered")
+        };
+        if (userStatus=="2") {
+     
+        var statusText=" Tested positive for COVID-19"
+//Set user status to infected
+        //Set user status icon to infected
+document.getElementById("currentStatusIcon").setAttribute("class","fa fa-window-close d-flex justify-content-center align-self-center mx-auto icon_infected")
+//Set user current status text to infected
+document.getElementById("currentStatusText").children[0].innerText="Er testet positiv for COVID-19"
+//Set user current status text color to infected
+document.getElementById("currentStatusText").setAttribute("class","text-center icon_infected")
+        };
+        if (userStatus=="3") {
+
+        var statusText=" Has symptons of COVID-19"
+        //Set user status to warning
+        //Set user status icon to warning
+document.getElementById("currentStatusIcon").setAttribute("class","fa fa-warning d-flex justify-content-center align-self-center mx-auto icon_warning")
+//Set user current status text to warning
+document.getElementById("currentStatusText").children[0].innerText="Har symptomer på COVID-19"
+//Set user current status text color to warning
+document.getElementById("currentStatusText").setAttribute("class","text-center icon_warning")
+        };
+        if (userStatus=="-3") {
+       
+        var statusText=" Invite them to COVID-19 NSCU"
+        };
+        
+}
+    function updateStatus(newStatus){
+     firebase.database().ref('/users/' + "29837779" + "/status").remove()
+  firebase.database().ref('users/29837779').set({
+    status: newStatus,
+  });
+location.reload()
+}
+
+    function getUserStatus(user){
+var userStatus=""
+return firebase.database().ref('/users/' + user.photoURL).once('value').then(function(snapshot) {
+    if (typeof snapshot.val() === 'undefined' || snapshot.val() === null) {
+    // variable is undefined or null
+    console.log("Not found.")
+    var userStatus="User status not set"
+}else{
+    console.log("Found")
+    console.log(snapshot.val())
+    var userStatus=snapshot.val().status
+doStatusCheck(userStatus)
+}
+});
+ console.log(userStatus)
+
+}
+       firebase.auth().onAuthStateChanged(function(user) {
+  if (user) {
+    // User is signed in.
+getUserStatus(firebase.auth().currentUser)
+      document.getElementById("WelcomeUsername").innerText=firebase.auth().currentUser.displayName
+      //Sets the current users display status
+
+      
+    // ...
+  } else {
+    // User is signed out.
+    // ...
+console.log("User is not logged in.")
+      location.href="./login.html"
+  }
+});                                                                     
+window.addEventListener('load', function(event) {
+  //the event occurred
+
+        document.getElementById("setStatusAllGood").addEventListener("click", function(){
+         updateStatus("0")
+    })
+      document.getElementById("setStatusRecovered").addEventListener("click", function(){
+        updateStatus("1")
+    })
+      document.getElementById("setStatusWarning").addEventListener("click", function(){
+         updateStatus("3")
+    })
+      document.getElementById("setStatusInfected").addEventListener("click", function(){
+         updateStatus("2")
+    })
+})
+    </script>
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+</body>
+
+</html>

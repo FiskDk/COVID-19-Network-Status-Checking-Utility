@@ -1,0 +1,182 @@
+.login-dark {
+  height: 1000px;
+  background: #475d62 url(../../assets/img/star-sky.jpg);
+  background-size: cover;
+  position: relative;
+}
+
+.login-dark form {
+  max-width: 320px;
+  width: 90%;
+  background-color: #1e2833;
+  padding: 40px;
+  border-radius: 4px;
+  transform: translate(-50%, -50%);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  color: #fff;
+  box-shadow: 3px 3px 4px rgba(0,0,0,0.2);
+}
+
+.login-dark .illustration {
+  text-align: center;
+  padding: 15px 0 20px;
+  font-size: 100px;
+  color: #2980ef;
+}
+
+.login-dark form .form-control {
+  background: none;
+  border: none;
+  border-bottom: 1px solid #434a52;
+  border-radius: 0;
+  box-shadow: none;
+  outline: none;
+  color: inherit;
+}
+
+.login-dark form .btn-primary {
+  background: #214a80;
+  border: none;
+  border-radius: 4px;
+  padding: 11px;
+  box-shadow: none;
+  margin-top: 26px;
+  text-shadow: none;
+  outline: none;
+}
+
+.login-dark form .btn-primary:hover, .login-dark form .btn-primary:active {
+  background: #214a80;
+  outline: none;
+}
+
+.login-dark form .forgot {
+  display: block;
+  text-align: center;
+  font-size: 12px;
+  color: #6f7a85;
+  opacity: 0.9;
+  text-decoration: none;
+}
+
+.login-dark form .forgot:hover, .login-dark form .forgot:active {
+  opacity: 1;
+  text-decoration: none;
+}
+
+.login-dark form .btn-primary:active {
+  transform: translateY(1px);
+}
+
+.icon_allGood {
+  color: #00c300;
+}
+
+.icon_warning {
+  color: #FFFC00;
+}
+
+.icon_infected {
+  color: #ff5700;
+}
+
+.icon_unknown {
+  color: #007ee5;
+}
+
+.table {
+  width: 100%;
+  margin-bottom: 1rem;
+  color: #000000;
+}
+
+.table thead th {
+  vertical-align: bottom;
+  border-bottom: 2px solid rgba(0,0,0,0);
+}
+
+.table td, .table th {
+  padding: .75rem;
+  vertical-align: top;
+  border-top: 1px solid rgba(0,0,0,0);
+}
+
+.info_card {
+  width: 398px;
+  background-color: #ffffff;
+  color: #000000;
+}
+
+.roundedButton {
+  background-color: #44c767;
+  border-radius: 42px;
+  display: inline-block;
+  cursor: pointer;
+  color: #ffffff;
+  font-family: Arial;
+  font-size: 20px;
+  padding: 8px 68px;
+  text-decoration: none;
+}
+
+.roundedButton:hover {
+  background-color: #5cbf2a;
+}
+
+.roundedButton:active {
+  position: relative;
+  top: 1px;
+}
+
+a:hover {
+  color: white;
+  text-decoration: initial;
+}
+
+.icon_recovered {
+  color: #ff0084;
+}
+
+.divSegment {
+  border-radius: 18px;
+}
+
+.whiteBorder, .table thead th, {
+  vertical-align: bottom;
+  border-bottom: 2px solid #ffffff;
+}
+
+.whiteBorder .table td, .table th, {
+  padding: .75rem;
+  vertical-align: top;
+  border-top: 1px solid #ffffff;
+}
+
+.whiteBorder .table thead th {
+  vertical-align: bottom;
+  border-bottom: 2px solid #ffffff;
+}
+
+.contactDiv {
+  width: 398px;
+  background-color: rgb(30,40,51);
+  color: #ffffff;
+  overflow: hidden;
+}
+
+.info_card.divSegment {
+  width: 330px;
+  align-self: center;
+  margin-bottom: 12px;
+}
+
+p {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  padding-left: 7px;
+  padding-right: 7px;
+  overflow: hidden;
+}
+
