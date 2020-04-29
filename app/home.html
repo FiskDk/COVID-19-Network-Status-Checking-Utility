@@ -82,6 +82,7 @@
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
   firebase.analytics();
+    var user = firebase.auth().currentUser;
     //End of firebase loading code
       function doStatusCheck(userStatus){
          console.log("Checking status : " + userStatus)
