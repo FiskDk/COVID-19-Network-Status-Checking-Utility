@@ -67,11 +67,16 @@ console.log("Creating account for : " + tempuserphone)
   var password=document.getElementById("passIn").value
   firebase.auth().createUserWithEmailAndPassword(email, password)
 .then(function(result) {
-  return result.user.updateProfile({
+       setTimeout(function () {
+        if (newState == -1) {
+          return result.user.updateProfile({
     displayName: document.getElementById("nameIn").value,
     photoURL: tempuserphone
 //console.log("user created.")
   });
+        }
+    }, 5000);
+  
 }).catch(function(error) {
   console.log(error);
 });
@@ -81,49 +86,6 @@ console.log("Creating account for : " + tempuserphone)
   firebase.database().ref('users/' + tempuserphone).set({
     status: "0",
       })
-
-var user = firebase.auth().currentUser;
-
-user.updateProfile({
-    displayName: document.getElementById("nameIn").value,
-    photoURL: tempuserphone
-}).then(function() {
-  // Update successful.
-}).catch(function(error) {
-  // An error happened.
-});
-     user.updateProfile({
-    displayName: document.getElementById("nameIn").value,
-    photoURL: tempuserphone
-}).then(function() {
-  // Update successful.
-}).catch(function(error) {
-  // An error happened.
-});
-     user.updateProfile({
-    displayName: document.getElementById("nameIn").value,
-    photoURL: tempuserphone
-}).then(function() {
-  // Update successful.
-}).catch(function(error) {
-  // An error happened.
-});
-     user.updateProfile({
-    displayName: document.getElementById("nameIn").value,
-    photoURL: tempuserphone
-}).then(function() {
-  // Update successful.
-}).catch(function(error) {
-  // An error happened.
-});
-     user.updateProfile({
-    displayName: document.getElementById("nameIn").value,
-    photoURL: tempuserphone
-}).then(function() {
-  // Update successful.
-}).catch(function(error) {
-  // An error happened.
-});
 
 
  })
