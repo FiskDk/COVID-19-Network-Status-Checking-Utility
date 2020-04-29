@@ -1,0 +1,6 @@
+Bug reporting system
+bug:xxxx-y-z-w-nnn
+"xxxx"- Version number ex if the version is 0.0.1.2 the code would be "0012"
+"y" - If its a beta, then the beta v ex (0.0.1.2b2) = 2 // 0012-2
+"z" - if its a dev release 0 = no 1 = yes ex(indev 0.0.0.3b3) = 0001-3-1
+"nnn" - Bug number : 0-999 ex 0001-3-1-001

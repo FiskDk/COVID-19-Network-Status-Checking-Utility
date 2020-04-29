@@ -82,7 +82,6 @@
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
   firebase.analytics();
-    var user = firebase.auth().currentUser;
     //End of firebase loading code
       function doStatusCheck(userStatus){
          console.log("Checking status : " + userStatus)
@@ -138,8 +137,8 @@ document.getElementById("currentStatusText").setAttribute("class","text-center i
         
 }
     function updateStatus(newStatus){
-     firebase.database().ref('/users/' + user.photoURL + "/status").remove()
-  firebase.database().ref('users/'+user.photoURL).set({
+     firebase.database().ref('/users/' + firebase.auth().currentUser.photoURL + "/status").remove()
+  firebase.database().ref('users/'+firebase.auth().currentUser.photoURL).set({
     status: newStatus,
   });
 location.reload()
