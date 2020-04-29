@@ -1,1 +1,2 @@
 bug:0001-3-1-001 // User cant change their status. [FIXED]
+bug:0001-4-1-002 // When signing up the photoURL and displayName values are not set. [IN PROGRESS]
