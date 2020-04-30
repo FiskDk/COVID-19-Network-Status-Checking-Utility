@@ -58,7 +58,9 @@
       var database = firebase.database();
      firebase.auth().onAuthStateChanged(function(user) {
   if (user) {
-      location.href="./home.html"
+ setTimeout(function(){
+       location.href="./home.html"
+}, 3000);
    
   }else{
       console.log("Not logged in, or the authentacation failed.")
@@ -80,6 +82,11 @@ console.log("Creating account for : " + tempuserphone)
     displayName: document.getElementById("nameIn").value,
     photoURL: tempuserphone
 //console.log("user created.")
+
+      //code before the pause
+setTimeout(function(){
+       location.href="./home.html"
+}, 3000);
   });
 }).catch(function(error) {
   console.log(error);
