@@ -10,6 +10,11 @@
     <link rel="manifest" href="manifest.json">
     <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
     <link rel="stylesheet" href="assets/fonts/ionicons.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Acme">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Allerta">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Amiko">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Archivo">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Archivo+Black">
     <link rel="stylesheet" href="assets/css/Login-Form-Dark.css">
     <link rel="stylesheet" href="assets/css/styles.css">
 </head>
@@ -44,20 +49,13 @@
         </div>
     </div>
     <div class="align-self-center m-auto divSegment" style="background-color: #ffffff;width: 330px;height: 332px;overflow-y: scroll;">
-        <h1 class="text-center">Advarsler<br></h1><a class="text-center text-center" href="index.html" style="color: #000000;padding-top: 12px;">Mine kontakter</a>
-        <p style="padding-left: 7px;padding-right: 7px;">This is hardcoded, these elements will be dynamicly created when the support for it has been added.<br><br>This is likely going to be changed, and imported into the contacts section.<br><br>4 af dine kontaktpersoner har fået symptomer på COVID-19.</p>
-        <ul>
-            <li>Tonni Svendsen</li>
-            <li>Kasper Petersen</li>
-            <li>Sofie Nielsen</li>
-            <li>Micheal Fisker</li>
-        </ul>
-        <p style="padding-left: 7px;padding-right: 7px;">2 af dine kontakter er kommet sig efter COVID-19!</p>
-        <ul>
-            <li>Birte Hansen</li>
-            <li>Sven-Erik Poulsen</li>
-        </ul>
-    </div><- Gets Firebase access->
+        <h1 class="text-center">Menu</h1>
+        <div style="margin-top: 27px;"><a class="text-nowrap d-flex justify-content-center align-items-center align-content-center m-auto roundedButton" href="contacts.html" id="iHaveSymptomsButton" style="width: 250px;background-color: #5cbf2a;color: #000000;font-family: 'Archivo Black', sans-serif;">Mine Kontakter</a></div>
+        <div
+            style="margin-top: 27px;"><a class="text-nowrap d-flex justify-content-center align-items-center align-content-center m-auto roundedButton" href="symptomer.html" id="iHaveSymptomsButton" style="width: 250px;background-color: #ff5700;color: #000000;font-family: 'Archivo Black', sans-serif;">Har jeg COVID-19?</a></div>
+    <div
+        style="margin-top: 27px;"><a class="text-nowrap d-flex justify-content-center align-items-center align-content-center m-auto roundedButton" href="info.html" id="iHaveSymptomsButton" style="width: 250px;background-color: #FFFC00;color: #000000;font-family: 'Archivo Black', sans-serif;">Info</a></div>
+        </div><- Gets Firebase access->
 <!-- The core Firebase JS SDK is always required and must be listed first -->
 <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-auth.js"></script>
@@ -174,7 +172,7 @@ getUserStatus(firebase.auth().currentUser)
     // User is signed out.
     // ...
 console.log("User is not logged in.")
-      location.href="./login.html"
+      location.href="./index.html"
   }
 });                                                                     
 window.addEventListener('load', function(event) {
@@ -194,8 +192,8 @@ window.addEventListener('load', function(event) {
     })
 })
     </script>
-    <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+        <script src="assets/js/jquery.min.js"></script>
+        <script src="assets/bootstrap/js/bootstrap.min.js"></script>
 </body>
 
 </html>

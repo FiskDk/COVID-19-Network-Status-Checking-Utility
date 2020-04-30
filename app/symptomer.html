@@ -10,22 +10,89 @@
     <link rel="manifest" href="manifest.json">
     <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
     <link rel="stylesheet" href="assets/fonts/ionicons.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Acme">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Allerta">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Amiko">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Archivo">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Archivo+Black">
     <link rel="stylesheet" href="assets/css/Login-Form-Dark.css">
     <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 
 <body style="background-color: #1e2833;">
     <h1 class="text-center" style="color: #ffffff;margin-top: 69px;">Har jeg COVID-19?</h1>
-    <div class="border rounded d-flex justify-content-center align-self-center m-auto" style="background-color: #ffffff;width: 330px;height: 531px;">
+    <div class="border rounded d-flex justify-content-center align-self-center m-auto" style="background-color: #ffffff;width: 330px;height: 613px;">
         <div>
             <h5 class="text-center"></h5>
             <p class="text-nowrap d-flex" style="height: 69px;font-size: 18px;"><strong>Her er symptomerne på COVID-19</strong><br><br></p>
             <p><strong>De mest normale symptomer er :</strong><br>&nbsp;- Feber,<br>&nbsp;- Søvnighed,<br>&nbsp;- Tør hoste.<br><br><strong>Andre symptomer kan være :</strong><br>&nbsp;- Ømhed og smerter.<br>&nbsp;- Stoppet næse.<br>&nbsp;- Løbende næse.<br>&nbsp;-
                 Ondt i halsen.<br>&nbsp;- Diarré.<br><br><strong>Hvis du har nogen af symptomerne,</strong><br><strong>bedes du klikke på "</strong>Jeg har symptomer".<br><br></p>
-        </div>
+            <div style="margin-top: 27px;"><a class="text-nowrap d-flex justify-content-center align-items-center align-content-center m-auto roundedButton" href="home.html" id="iHaveSymptomsButton" style="width: 250px;background-color: #ff5700;color: #000000;font-family: 'Archivo Black', sans-serif;height: 46px;"><i class="fa fa-arrow-left" href="./home.html"></i></a></div>
+            <div
+                style="margin-top: 27px;"><a class="text-nowrap d-flex justify-content-center align-items-center align-content-center m-auto roundedButton" id="iHaveSymptomsButton" style="width: 250px;background-color: #FFFC00;color: #000000;font-family: 'Archivo Black', sans-serif;"
+                    href="javascript:hasSympt()">Jeg har symptomer</a></div>
     </div>
-    <div style="margin-top: 27px;"><a class="text-nowrap d-flex justify-content-center align-items-center align-content-center m-auto roundedButton" href="#" id="iHaveSymptomsButton" style="width: 250px;background-color: #FFFC00;">Jeg har symptomer</a></div>
-    <div style="margin-top: 27px;"><a class="d-flex justify-content-center align-items-center align-content-center m-auto roundedButton" href="#" id="symptomsBack" style="width: 250px;">Tilbage</a></div>
+    </div>
+    <div style="margin-top: 27px;">
+        <div class="modal fade" role="dialog" tabindex="-1" id="setSymp">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Info</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
+                    <div class="modal-body">
+                        <p>Eftersom du har trykket på "Jeg har symptomer", har vi ændret din status til "Har symptomer på COVID-19".<br>Kontakt venligst din læge med det samme.</p>
+                    </div>
+                    <div class="modal-footer"><button class="btn btn-light" type="button" data-dismiss="modal">Ok</button></div>
+                </div>
+            </div>
+        </div>
+    </div><script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-database.js"></script>
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-analytics.js"></script>
+
+<script>
+     var firebaseConfig = {
+    apiKey: "AIzaSyDYB84ZI30wx3DwBv0gdrH_8fauqX60qeg",
+    authDomain: "covid-19-nscu.firebaseapp.com",
+    databaseURL: "https://covid-19-nscu.firebaseio.com",
+    projectId: "covid-19-nscu",
+    storageBucket: "covid-19-nscu.appspot.com",
+    messagingSenderId: "972494699942",
+    appId: "1:972494699942:web:9a90675bb78ed3f5b0e367",
+    measurementId: "G-BHY41ERJ11"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
+      var database = firebase.database();
+     firebase.auth().onAuthStateChanged(function(user) {
+  if (user) {
+         
+   
+  }else{
+      console.log("Not logged in, or the authentacation failed.")
+  }
+     })
+    function updateStatus(newStatus){
+     firebase.database().ref('/users/' + firebase.auth().currentUser.photoURL + "/status").remove()
+  firebase.database().ref('users/'+firebase.auth().currentUser.photoURL).set({
+    status: newStatus,
+  });
+}
+    function hasSympt(){
+         updateStatus("3")
+            console.log("Setting status")
+        $('#setSymp').modal('show')
+    }
+    window.onLoad = function(){
+        document.getElementById("iHaveSymptomsButton").addEventListener("click", function(){
+           
+        })
+    }
+    </script>
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
 </body>
