@@ -194,7 +194,7 @@ html, body {
   }
 }
 
-@media (max-width: 512px) {
+@media (max-width: 800px) {
   .clean-block.clean-hero p {
     margin-bottom: 0px!important;
   }
