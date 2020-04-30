@@ -183,3 +183,20 @@ html, body {
   border-color: black;
 }
 
+@media (min-width: 300px) {
+  .clean-block.clean-hero {
+  }
+}
+
+@media (max-width: 300px) {
+  .icon-arrow-down {
+    margin-top: -10px!important;
+  }
+}
+
+@media (max-width: 512px) {
+  .clean-block.clean-hero p {
+    margin-bottom: 0px!important;
+  }
+}
+
